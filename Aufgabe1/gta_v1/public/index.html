@@ -31,14 +31,14 @@
             
                 <fieldset>
                     <legend>Add a new GeoTag</legend>
-                    <label for="lat" >Latitude:</label><br>
-                    <input type="number" id="lat" name="latitude" value="49.01379"  readonly ><br>
-                    <label for="long" >Longitude:</label><br>
-                    <input type="number" id="long" name="longitude" value="8.390071" readonly ><br>
-                    <label for="nametext" >Name:</label><br>
-                    <input type="text" id="nametext" name="name_text" maxlength="10" value="e.g. Central Berlin" required><br>
-                    <label for="hash" >Hasgtag:</label><br>
-                    <input type="text" id="hash" name="hashtag" pattern="#[A-Za-z]{1,10}" value="e.g. #ber" optional ><br><br>
+                    <label for="lat" >Latitude:</label>
+                    <input type="number" id="lat" name="latitude" value="49.01379"  readonly >
+                    <label for="long" >Longitude:</label>
+                    <input type="number" id="long" name="longitude" value="8.390071" readonly >
+                    <label for="nametext" >Name:</label>
+                    <input type="text" id="nametext" name="name_text" maxlength="10" value="e.g. Central Berlin" required>
+                    <label for="hash" >Hasgtag:</label>
+                    <input type="text" id="hash" name="hashtag" pattern="#[A-Za-z]{1,10}" value="e.g. #ber" optional >
                     <input type="submit" id="button1" name="absendebutton" value="Add Tag"  >
                   </fieldset>
                
@@ -57,10 +57,12 @@
             
                 <fieldset>
                     <legend>Search</legend>
-                    <label for="term">Search term on keywords:</label><br>
-                    <input type="search" id="term"  name="searchterm" value="e.g. Berlin"  ><br><br>
+                    <label for="term">Search term on keywords:</label>
+                    <input type="search" id="term"  name="searchterm" value="e.g. Berlin"  >
                     <input type="submit" id="button2" name="absendebutton2" value="Search">
-                  
+                    <input type="hidden" name="latitude" id="discoveryLatitude" value="">
+                    <input type="hidden" name="longitude" id="discoveryLongitude" value="">
+
                   
                   </fieldset>
                   
