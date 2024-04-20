@@ -45,10 +45,47 @@ a {
 }
 
 /* ### TODO ### Styles for other HTML elements */
+h2 {
+  margin-bottom: 1rem;
+}
 
-/* ... your code here ... */
+fieldset {
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+}
 
+fieldset:not(:last-child) {
+  margin-bottom: 1rem;
+}
 
+label,
+input {
+  display: block;
+}
+label {
+  margin-bottom: .5rem;
+  color: var(--gray-color);
+}
+input {
+  padding: 0 .5rem;
+  line-height: 2rem;
+}
+
+input:not(:last-child) {
+  margin-bottom: 1rem;
+}
+input[type="submit"] {
+  background-color: var(--background-color);
+  color: black;
+  border: 1px solid var(--gray-color);
+  padding: 0.4rem;
+  transition: .15s background-color;
+  appearance: none;
+  cursor: pointer;
+}
+input[type="submit"]:hover {
+  background-color: var(--border-color);
+}
 /* Grid styles (no changes required) */
 
 .row {
@@ -88,6 +125,7 @@ a {
 
 .col-8 {
   width: calc(66.66% - 1rem);
+
 }
 
 .col-9 {
@@ -109,29 +147,110 @@ a {
 
 /* ### TODO ### Styles for Header Component */
 
-/* ... your code here ... */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem;
+  background-color: var(--background-color);
+  border-bottom: 1px solid var(--border-color);
+}
 
+.header img {
+  width: 3.5rem;
+}
+
+.header h1 {
+  font-size: 3.5rem;
+}
+
+.header nav a {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  font-size: 1rem;
+}
 
 /* ### TODO ### Styles for Main Component */
 
-/* ... your code here ... */
+.main {
+  padding: 3rem;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.main h2 {
+  margin-bottom: 1rem;
+}
 
 
 /* ### TODO ### Styles for Tagging component */
 
-/* ... your code here ... */
+.main__tagging input {
+  width: min(12rem, 100%);
+}
 
 
 /* ### TODO ### Styles for Discovery component */
+.main__discovery {
 
-/* ... your code here ... */
+}
+.discovery__search input {
+  width: min(12rem, 100%);
+}
 
+.discovery__wrapper {
+  margin-top: 2rem;
+}
 
+.discovery__results {
+  list-style-type: none;
+}
+.discovery__map{
+  margin-left: 10rem;
+}
+.discovery__map img {
+  width: 100%;
+  height: 100%;
+}
+.discovery__map span {
+  color: var(--gray-color);
+}
+
+.discovery__results li {
+  padding: 1rem .75rem;
+  background-color: var(--background-color);
+  color: var(--link-color);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+}
+.discovery__results li:not(:first-child) {
+  margin-top: 1rem;
+}
 /* ### TODO ### Styles for Footer Component */
 
-/* ... your code here ... */
+.footer {
+  padding: 3rem;
+  background-color: var(--background-color);
+  border-top: 1px solid var(--border-color);
+}
 
 
 /* ### TODO ### Media Queries */
-
-/* ... your code here ... */
+@media screen and (max-width: 850px) {
+  .row {
+    flex-direction: column;
+  }
+  .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+    width: 100%;
+    margin-right: 0;
+  }
+ 
+  .col-8 {
+      margin: 0 auto; 
+      display: block; 
+      margin-top: 2rem;
+    
+    }
+  
+  
+}
