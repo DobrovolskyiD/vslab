@@ -118,7 +118,35 @@ class MapManager {
  */
 // ... your code here ...
 
+function updateLocation() {
+    LocationHelper.findLocation((lacation) => {
+        
+        
+        latitude = lacation.latitude;
+        longitude = lacation.longitude
+
+        // Koordinaten in die Formulare eintragen
+        document.getElementById('lat').value = latitude;
+        document.getElementById('long').value = longitude;
+        document.getElementById('discoveryLatitude').value = latitude; // Versteckte Eingabefelder berücksichtigen
+        document.getElementById('discoveryLongitude').value = longitude; // Versteckte Eingabefelder berücksichtigen
+
+        
+
+
+
+    });
+
+
+
+
+}
+
+
+// Warten auf das vollständige Laden des DOM-Inhalts und dann Aufruf von updateLocation
+document.addEventListener("DOMContentLoaded", () => { updateLocation() });
+
 // Wait for the page to fully load its DOM content, then call updateLocation
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => { 
     alert("Please change the script 'geotagging.js'");
 });
