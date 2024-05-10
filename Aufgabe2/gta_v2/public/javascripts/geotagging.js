@@ -123,7 +123,7 @@ function updateLocation() {
         
         
         latitude = lacation.latitude;
-        longitude = lacation.longitude
+        longitude = lacation.longitude;
 
         // Koordinaten in die Formulare eintragen
         document.getElementById('lat').value = latitude;
@@ -131,8 +131,19 @@ function updateLocation() {
         document.getElementById('discoveryLatitude').value = latitude; // Versteckte Eingabefelder berücksichtigen
         document.getElementById('discoveryLongitude').value = longitude; // Versteckte Eingabefelder berücksichtigen
 
+        mapManager = new MapManager();
+        mapManager.initMap(latitude,longitude);
+        mapManager.updateMarkers(latitude,longitude);
+
+         // Find the <img> element by its id and remove it
+        mapViewImg = document.getElementById('mapView');
+        mapViewImg.remove();
         
 
+        // Find the <p> element by its parent and remove it
+        mapViewSpan = document.querySelector('.discovery__map span');
+        mapViewSpan.remove();
+        
 
 
     });
