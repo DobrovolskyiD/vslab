@@ -148,7 +148,7 @@ function updateLocation() {
     // Find the <p> element by its parent and remove it
     mapViewSpan = document.querySelector('.discovery__map span');
     mapViewSpan.remove();
-    
+    //
     
 }
 
