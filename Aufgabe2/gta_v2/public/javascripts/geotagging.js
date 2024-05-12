@@ -119,38 +119,37 @@ class MapManager {
 // ... your code here ...
 
 function updateLocation() {
-    LocationHelper.findLocation((lacation) => {
+    LocationHelper.findLocation((location) => {
         
         
-        latitude = lacation.latitude;
-        longitude = lacation.longitude;
+        latitude = location.latitude;
+        longitude = location.longitude;
 
         // Koordinaten in die Formulare eintragen
         document.getElementById('lat').value = latitude;
         document.getElementById('long').value = longitude;
         document.getElementById('discoveryLatitude').value = latitude; // Versteckte Eingabefelder berücksichtigen
         document.getElementById('discoveryLongitude').value = longitude; // Versteckte Eingabefelder berücksichtigen
-
+    
+     
+    
         mapManager = new MapManager();
         mapManager.initMap(latitude,longitude);
         mapManager.updateMarkers(latitude,longitude);
 
-         // Find the <img> element by its id and remove it
-        mapViewImg = document.getElementById('mapView');
-        mapViewImg.remove();
         
-
-        // Find the <p> element by its parent and remove it
-        mapViewSpan = document.querySelector('.discovery__map span');
-        mapViewSpan.remove();
-        
-
-
     });
 
+    // Find the <img> element by its id and remove it
+    mapViewImg = document.getElementById('mapView');
+    mapViewImg.remove();
+        
 
-
-
+    // Find the <p> element by its parent and remove it
+    mapViewSpan = document.querySelector('.discovery__map span');
+    mapViewSpan.remove();
+    
+    
 }
 
 
