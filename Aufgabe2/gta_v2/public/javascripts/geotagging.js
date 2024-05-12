@@ -121,9 +121,9 @@ class MapManager {
 function updateLocation() {
     LocationHelper.findLocation((location) => {
         
-        
-        latitude = location.latitude;
-        longitude = location.longitude;
+        // gibt die Koordinaten aus breite und länge 
+        latitude = location.latitude; // breite 
+        longitude = location.longitude; // länge 
 
         // Koordinaten in die Formulare eintragen
         document.getElementById('lat').value = latitude;
@@ -132,7 +132,7 @@ function updateLocation() {
         document.getElementById('discoveryLongitude').value = longitude; // Versteckte Eingabefelder berücksichtigen
     
      
-    
+        // Initialize map and update markers
         mapManager = new MapManager();
         mapManager.initMap(latitude,longitude);
         mapManager.updateMarkers(latitude,longitude);
@@ -152,11 +152,8 @@ function updateLocation() {
     
 }
 
-
-// Warten auf das vollständige Laden des DOM-Inhalts und dann Aufruf von updateLocation
-document.addEventListener("DOMContentLoaded", () => { updateLocation() });
-
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", () => { 
+    updateLocation(),
     alert("Please change the script 'geotagging.js'");
 });
