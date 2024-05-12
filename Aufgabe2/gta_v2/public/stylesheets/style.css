@@ -150,8 +150,6 @@ input[type="submit"]:hover {
 /* ### TODO ### Styles for Header Component */
 
 .header {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 3rem;
   background-color: var(--background-color);
@@ -175,8 +173,6 @@ input[type="submit"]:hover {
 /* ### TODO ### Styles for Main Component */
 
 .main {
-  display: flex;  
-  flex-direction: row;
   gap: 30px;
   padding: 3rem;
   max-width: 1440px;
@@ -196,15 +192,12 @@ input[type="submit"]:hover {
 
 
 /* ### TODO ### Styles for Discovery component */
-.main__discovery {
 
-}
 .discovery__search input {
   width: min(12rem, 100%);
 }
 
 .discovery__wrapper {
-  display: flex;
   margin-top: 2rem;
 }
 
@@ -256,8 +249,5 @@ input[type="submit"]:hover {
     margin: 0 auto; 
     display: block; 
     margin-top: 2rem;
-    
-  }
-  
-  
+  }
 }
