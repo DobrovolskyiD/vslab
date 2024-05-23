@@ -42,7 +42,7 @@ const GeoTagStore = require('../models/geotag-store');
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
-  res.render('index', { taglist: [] })
+  res.render('index', { taglist: [], latitude: '', longitude: ''  })
 });
 
 /**
@@ -61,6 +61,14 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.post('/tagging', (req, res) => {
+  const { name, latitude, longitude, hashtag } = req.body;
+  const newGeoTag = new GeoTag(name, parseFloat(latitude), parseFloat(longitude), hashtag);
+  const store = new GeoTagStore();
+  store.addGeoTag(newGeoTag);
+  const nearbyTags = store.getNearbyGeoTags(newGeoTag.latitude, newGeoTag.longitude, 10);
+  res.render('index', { taglist: nearbyTags, latitude, longitude });
+});
 
 /**
  * Route '/discovery' for HTTP 'POST' requests.
@@ -79,5 +87,16 @@ router.get('/', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.post('/discovery', (req, res) => {
+  const { latitude, longitude, searchterm } = req.body;
+  const store = new GeoTagStore();
+  let foundTags;
+  if (searchterm) {
+    foundTags = store.searchGeoTags(searchterm, parseFloat(latitude), parseFloat(longitude), 10);
+  } else {
+    foundTags = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude), 10);
+  }
+  res.render('index', { taglist: foundTags, latitude, longitude });
+});
 
 module.exports = router;

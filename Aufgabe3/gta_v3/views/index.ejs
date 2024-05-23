@@ -44,9 +44,9 @@
                 <fieldset>
                     <legend>Add a new GeoTag</legend>
                     <label for="lat" >Latitude:</label>
-                    <input type="number" id="lat" name="latitude" value="49.01379"  readonly >
+                    <input type="number" id="lat" name="latitude" value="<%= latitude %>"  readonly >
                     <label for="long" >Longitude:</label>
-                    <input type="number" id="long" name="longitude" value="8.390071" readonly >
+                    <input type="number" id="long" name="longitude" value="<%= longitude %>" readonly >
                     <label for="nametext" >Name:</label>
                     <input type="text" id="nametext" name="name_text" maxlength="10" placeholder="e.g. Central Berlin" required>
                     <label for="hash" >Hashtag:</label>
@@ -72,8 +72,8 @@
                     <label for="term">Search term on keywords:</label>
                     <input type="search" id="term"  name="searchterm" placeholder="e.g. Berlin"  >
                     <input type="submit" id="button2" name="absendebutton2" value="Search">
-                    <input type="hidden" name="latitude" id="discoveryLatitude" value="">
-                    <input type="hidden" name="longitude" id="discoveryLongitude" value="">
+                    <input type="hidden" name="latitude" id="discoveryLatitude" value="<%= latitude %>">
+                    <input type="hidden" name="longitude" id="discoveryLongitude" value="<%= longitude %>">
 
                   
                   </fieldset>
@@ -107,6 +107,8 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="./javascripts/geotagging.js"></script>
+    <script src="./javascripts/location-helper.js"></script>
+    <script src="./javascripts/map-manager.js"></script>
 
 
 </body>
