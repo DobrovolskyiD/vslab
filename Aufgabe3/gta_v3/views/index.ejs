@@ -16,6 +16,12 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin=""></script>
+    
+    <!-- Load JavaScripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./javascripts/location-helper.js"></script>
+    <script src="./javascripts/map-manager.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -90,7 +96,7 @@
                         <% }); %>  
                     </ul>
                 </div>
-                <div class="discovery__map col-8" id="map">
+                <div class="discovery__map col-8" id="map" data-tags="<%= JSON.stringify(taglist) %>">
                     <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" />
                     <span>Result map</span>
                 </div>
@@ -107,9 +113,11 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="./javascripts/geotagging.js"></script>
-    <script src="./javascripts/location-helper.js"></script>
-    <script src="./javascripts/map-manager.js"></script>
-
+    <script>
+        // Laden der GeoTag-Objekte aus dem data-tags-Attribut des Bildes
+        const geoTags = JSON.parse(document.getElementById('mapView').getAttribute('data-tags'));
+        console.log(geoTags); // GeoTag-Objekte stehen jetzt zur Verfügung
+    </script>
 
 </body>
 

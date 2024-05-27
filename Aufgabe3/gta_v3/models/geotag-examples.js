@@ -29,6 +29,7 @@ class GeoTagExamples {
             ['Building B', 49.016843, 8.391372, '#campus'],
             ['Building K', 49.013190, 8.392090, '#campus'],
             ['test', 49.05697, 8.92930, '#hi'],
+            ['test2', 49.02486, 8.75180, '#hi'],
         ];
     }
 
