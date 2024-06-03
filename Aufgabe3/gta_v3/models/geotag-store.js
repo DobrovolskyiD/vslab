@@ -41,16 +41,16 @@ class InMemoryGeoTagStore {
     addGeoTag(geoTag) {
         this.geotags.push(geoTag);
     }
-/*
+
     /**
      * Removes GeoTags from the store by name.
      * @param {string} name - The name of the GeoTag to remove.
     */
-/*  
+  
     removeGeoTag(name) {
         this.geotags = this.geotags.filter(geoTag => geoTag.name !== name);
     }
-    */
+       
     /**
      * Returns all GeoTags in the proximity of a location.
      * @param {number} latitude - The latitude of the location.

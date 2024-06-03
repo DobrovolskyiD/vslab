@@ -1,5 +1,10 @@
 // File origin: VS1LAB A2
 
+//const { tagList } = require("../../models/geotag-examples");
+
+//const { tagList } = require("../../models/geotag-examples");
+
+
 /* eslint-disable no-unused-vars */
 
 // This script is executed when the browser loads index.html.
@@ -42,7 +47,6 @@ function updateLocation() {
             // Initialize map and update markers
             mapManager = new MapManager();
             mapManager.initMap(latitude, longitude);
-           // mapManager.updateMarkers(latitude, longitude);
 
             // Find the <img> element by its id and remove it
             mapViewImg = document.getElementById('mapView');
@@ -52,17 +56,18 @@ function updateLocation() {
             // Find the <p> element by its parent and remove it
             mapViewSpan = document.querySelector('.discovery__map span');
             mapViewSpan.remove();
+            
+            map = document.getElementById('map');
+            taglsit_json = map.getAttribute('data-tags');
+            console.log("data-tags attribute:", taglsit_json);
 
-            // Lesen des data-tags-Attributs aus dem DOM
-            mapView = document.getElementById('map');
-            tagsData = mapView.getAttribute('data-tags');
+            taglsit = JSON.parse(taglsit_json);
 
-            // Konvertieren des JSON-Strings in ein JavaScript-Array-Objekt
-            tagList = JSON.parse(tagsData);
+            console.log("tags", taglsit);
 
-            // Übergeben des Array-Objekts an die updateMarkers-Methode
-            mapManager.updateMarkers(latitude, longitude, tagList);
-     
+            mapManager.updateMarkers(latitude, longitude,taglsit);
+
+
         }, (error) => {
             // Fehlerbehandlung und Ausgabe der Fehlermeldung
             console.error('Fehler bei der Positionsbestimmung:', error);
@@ -73,8 +78,6 @@ function updateLocation() {
         // Initialize map and update markers
         mapManager = new MapManager();
         mapManager.initMap(latitude, longitude);
-        mapManager.updateMarkers(latitude, longitude);
-
 
 
         // Find the <img> element by its id and remove it
@@ -85,17 +88,17 @@ function updateLocation() {
         // Find the <p> element by its parent and remove it
         mapViewSpan = document.querySelector('.discovery__map span');
         mapViewSpan.remove();
-  
-        // Lesen des data-tags-Attributs aus dem DOM
-        mapView = document.getElementById('map');
-        tagsData = mapView.getAttribute('data-tags'); 
+        
+        map = document.getElementById('map');
+        taglsit_json = map.getAttribute('data-tags');
+        console.log("data-tags attribute:", taglsit_json);
 
-        // Konvertieren des JSON-Strings in ein JavaScript-Array-Objekt
-        tagList = JSON.parse(tagsData);
+        taglsit = JSON.parse(taglsit_json);
 
-        // Übergeben des Array-Objekts an die updateMarkers-Methode
-        mapManager.updateMarkers(latitude, longitude, tagList);
+        console.log("tags", taglsit);
 
+        //mapManager.updateMarkers(latitude, longitude,taglsit);
+        
     }
 
 }
