@@ -144,9 +144,6 @@ input[type="submit"]:hover {
   width: calc(100% - 1rem);
 }
 
-#map { 
-  height: 500px;
-}
 /* ### TODO ### Styles for Header Component */
 
 .header {
@@ -205,6 +202,7 @@ input[type="submit"]:hover {
 }
 .discovery__map{
   margin-left: 5rem;
+  height: 500px;
 }
 .discovery__map img {
   width: 100%;
@@ -215,7 +213,7 @@ input[type="submit"]:hover {
 }
 
 .discovery__results li {
-  width: 210px;
+  width: 300px;
   padding: 1rem .75rem;
   background-color: var(--background-color);
   color: var(--link-color);

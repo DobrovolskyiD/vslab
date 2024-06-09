@@ -1,10 +1,5 @@
 // File origin: VS1LAB A2
 
-//const { tagList } = require("../../models/geotag-examples");
-
-//const { tagList } = require("../../models/geotag-examples");
-
-
 /* eslint-disable no-unused-vars */
 
 // This script is executed when the browser loads index.html.
@@ -14,93 +9,76 @@
 // Try to find this output in the browser...
 console.log("The geoTagging script is going to start...");
 
-/**
- * 'updateLocation'
- * A function to retrieve the current location and update the page.
- * It is called once the page has been fully loaded.
- */
 function updateLocation() {
-    
-    // Selektieren Sie die Formularfelder für die Koordinaten im DOM
-    const latitudeField = document.getElementById('lat');
-    const longitudeField = document.getElementById('long');
-    
-    // Überprüfen Sie, ob die Koordinatenfelder bereits Werte enthalten
-    latitude = latitudeField.value;
-    longitude = longitudeField.value;
-    
-    // Falls die Felder leer sind, rufen Sie die Methode LocationHelper.findLocation() auf
-    if (!latitude || !longitude) {
-        console.log('Koordinatenfelder sind leer, Suche nach aktueller Position...');
-        LocationHelper.findLocation((location) => {
-        
-            // Gibt die Koordinaten aus Breite und Länge 
-            latitude = location.latitude; // Breite 
-            longitude = location.longitude; // Länge 
+    // Get the form elements for latitude and longitude
+    let latElement = document.getElementById('lat');
+    let longElement = document.getElementById('long');
+    let discoveryLatElement = document.getElementById('discoveryLatitude');
+    let discoveryLongElement = document.getElementById('discoveryLongitude');
 
-            // Koordinaten in die Formulare eintragen
-            latitudeField.value = latitude;
-            longitudeField.value = longitude;
-            document.getElementById('discoveryLatitude').value = latitude; // Versteckte Eingabefelder berücksichtigen
-            document.getElementById('discoveryLongitude').value = longitude; // Versteckte Eingabefelder berücksichtigen
-            
+    // Check if coordinates are already entered
+    let latitudes = latElement.value;
+    let longitudes = longElement.value;
+
+    // Find the <img> element by its id and remove it
+    let mapViewImg = document.getElementById('mapView');
+    if (mapViewImg) {
+        mapViewImg.remove();
+    }
+
+    // Find the <p> element by its parent and remove it
+    let mapViewSpan = document.querySelector('.discovery__map span');
+    if (mapViewSpan) {
+        mapViewSpan.remove();
+    }
+
+
+
+    if (!latitudes || !longitudes) {
+        // If either latitude or longitude is empty, find location
+        LocationHelper.findLocation((location) => {
+            // Log the location object
+            console.log("Location object received: ", location);
+
+            latitude = location.latitude;
+            longitude = location.longitude;
+
+            // Set the form elements with the new coordinates
+            latElement.value = latitude;
+            longElement.value = longitude;
+            discoveryLatElement.value = latitude;
+            discoveryLongElement.value = longitude;
+
+            // Log the updated coordinates
+            console.log("Updated coordinates: ", latitude, longitude);
+
             // Initialize map and update markers
             mapManager = new MapManager();
             mapManager.initMap(latitude, longitude);
 
-            // Find the <img> element by its id and remove it
-            mapViewImg = document.getElementById('mapView');
-            mapViewImg.remove();
+
+            // Get the GeoTag objects from the data attribute
+            geoTags = JSON.parse(document.getElementById('map').getAttribute('data-tags'));
+            console.log("GeoTags: ", geoTags);
+
+            mapManager.updateMarkers(latitude, longitude, geoTags);
             
-            
-            // Find the <p> element by its parent and remove it
-            mapViewSpan = document.querySelector('.discovery__map span');
-            mapViewSpan.remove();
-            
-            map = document.getElementById('map');
-            taglsit_json = map.getAttribute('data-tags');
-            console.log("data-tags attribute:", taglsit_json);
-
-            taglsit = JSON.parse(taglsit_json);
-
-            console.log("tags", taglsit);
-
-            mapManager.updateMarkers(latitude, longitude,taglsit);
-
-
-        }, (error) => {
-            // Fehlerbehandlung und Ausgabe der Fehlermeldung
-            console.error('Fehler bei der Positionsbestimmung:', error);
         });
     } else {
-        console.log('Koordinatenfelder sind bereits ausgefüllt.');
-        
-        // Initialize map and update markers
+        // Log the existing coordinates
+        console.log("Existing coordinates: ", latitudes, longitudes);
+
+        // Initialize map and update markers with existing coordinates
         mapManager = new MapManager();
-        mapManager.initMap(latitude, longitude);
+        mapManager.initMap(latitudes, longitudes);
 
+        // Get the GeoTag objects from the data attribute
+        geoTags = JSON.parse(document.getElementById('map').getAttribute('data-tags'));
+        console.log("GeoTags: ", geoTags);
 
-        // Find the <img> element by its id and remove it
-        mapViewImg = document.getElementById('mapView');
-        mapViewImg.remove();
-        
-        
-        // Find the <p> element by its parent and remove it
-        mapViewSpan = document.querySelector('.discovery__map span');
-        mapViewSpan.remove();
-        
-        map = document.getElementById('map');
-        taglsit_json = map.getAttribute('data-tags');
-        console.log("data-tags attribute:", taglsit_json);
-
-        taglsit = JSON.parse(taglsit_json);
-
-        console.log("tags", taglsit);
-
-        //mapManager.updateMarkers(latitude, longitude,taglsit);
+        mapManager.updateMarkers(latitudes, longitudes, geoTags);
         
     }
-
 }
 
 // Wait for the page to fully load its DOM content, then call updateLocation
