@@ -25,7 +25,7 @@ const GeoTag = require('../models/geotag');
  * It provides an in-memory store for geotag objects.
  */
 // eslint-disable-next-line no-unused-vars
-const GeoTagStore = require('../models/geotag-store');
+const InMemoryGeoTagStore = require('../models/geotag-store');
 
 // App routes (A3)
 
@@ -118,7 +118,16 @@ router.post('/discovery', (req, res) => {
  */
 
 // TODO: ... your code here ...
-
+router.get('/api/geotags', (req, res) => {
+  const { latitude, longitude, searchterm } = req.query;
+  let results;
+  if (searchterm) {
+    results = store.searchNearbyGeoTags(searchterm, latitude, longitude, 100); // Adjust radius as needed
+  } else {
+    results = store.getNearbyGeoTags(latitude, longitude, 100); // Adjust radius as needed
+  }
+  res.json(results);
+});
 
 /**
  * Route '/api/geotags' for HTTP 'POST' requests.
@@ -132,7 +141,12 @@ router.post('/discovery', (req, res) => {
  */
 
 // TODO: ... your code here ...
-
+router.post('/api/geotags', (req, res) => {
+  const { name, latitude, longitude, hashtag } = req.body;
+  const newGeoTag = new GeoTag(name, latitude, longitude, hashtag);
+  store.addGeoTag(newGeoTag);
+  res.status(201).json(newGeoTag);
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'GET' requests.
@@ -145,7 +159,15 @@ router.post('/discovery', (req, res) => {
  */
 
 // TODO: ... your code here ...
-
+router.get('/api/geotags/:id', (req, res) => {
+  const id = req.params.id;
+  const tag = store.getGeoTagById(id);
+  if (tag) {
+    res.json(tag);
+  } else {
+    res.status(404).send('GeoTag not found');
+  }
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'PUT' requests.
@@ -162,7 +184,17 @@ router.post('/discovery', (req, res) => {
  */
 
 // TODO: ... your code here ...
-
+router.put('/api/geotags/:id', (req, res) => {
+  const id = req.params.id;
+  const { name, latitude, longitude, hashtag } = req.body;
+  const updatedGeoTag = new GeoTag(name, latitude, longitude, hashtag, id);
+  const result = store.updateGeoTag(id, updatedGeoTag);
+  if (result) {
+    res.json(result);
+  } else {
+    res.status(404).send('GeoTag not found');
+  }
+});
 
 /**
  * Route '/api/geotags/:id' for HTTP 'DELETE' requests.
@@ -176,5 +208,16 @@ router.post('/discovery', (req, res) => {
  */
 
 // TODO: ... your code here ...
+router.delete('/api/geotags/:id', (req, res) => {
+  const id = req.params.id;
+  const result = store.removeid(id);
+  if (result) {
+    res.json(result);
+  } else {
+    res.status(404).send('GeoTag not found');
+  }
+});
+
+
 
 module.exports = router;
