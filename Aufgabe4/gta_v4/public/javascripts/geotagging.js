@@ -164,6 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateLocation();
 
     // Register event listeners for the forms
-    document.getElementById('button1').addEventListener('submit', submitTaggingForm);
-    document.getElementById('button2').addEventListener('submit', submitDiscoveryForm);
+    document.getElementById('tag-form').addEventListener((onclick), submitTaggingForm);
+    document.getElementById('button2').addEventListener('submit', submitDiscoveryForm);    
 });

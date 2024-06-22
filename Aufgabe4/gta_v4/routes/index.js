@@ -51,6 +51,7 @@ router.get('/', (req, res) => {
   res.render('index', { taglist: [], latitude: null  , longitude : null  })
 });
 
+
 /**
  * Route '/tagging' for HTTP 'POST' requests.
  * (http://expressjs.com/de/4x/api.html#app.post.method)
@@ -103,6 +104,8 @@ router.post('/discovery', (req, res) => {
 });
 
 
+
+
 // API routes (A4)
 
 /**
@@ -122,9 +125,11 @@ router.get('/api/geotags', (req, res) => {
   const { latitude, longitude, searchterm } = req.query;
   let results;
   if (searchterm) {
-    results = store.searchNearbyGeoTags(searchterm, latitude, longitude, 100); // Adjust radius as needed
+    results = store.searchNearbyGeoTags(searchterm, parseFloat(latitude), parseFloat(longitude), 100); // Adjust radius as needed
+  } else if (latitude && longitude) {
+    results = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude), 100); // Adjust radius as needed
   } else {
-    results = store.getNearbyGeoTags(latitude, longitude, 100); // Adjust radius as needed
+    results = store.getGeoTags();
   }
   res.json(results);
 });
