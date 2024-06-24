@@ -81,7 +81,24 @@ class InMemoryGeoTagStore{
     return null;
   }
 
+
+
+  /**
+   * Search for GeoTags in the store.
+   * @param {string} searchTerm - The search filter to apply.
+   * @returns {Object[]} A list of GeoTags that match the filter.
+   */
+  searchGeoTags(searchTerm) {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    return this.#geoTags.filter(tag => 
+      tag.name.toLowerCase().includes(lowerCaseSearchTerm) || 
+      (tag.hashtag && tag.hashtag.toLowerCase().includes(lowerCaseSearchTerm))
+    );
+  }
+  
+  
   // Ende der Aufgabe 4
+
 
   getGeoTags() {
     return this.#geoTags.slice();

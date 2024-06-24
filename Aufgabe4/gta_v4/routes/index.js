@@ -125,7 +125,7 @@ router.get('/api/geotags', (req, res) => {
   const { latitude, longitude, searchterm } = req.query;
   let results;
   if (searchterm) {
-    results = store.searchNearbyGeoTags(searchterm, parseFloat(latitude), parseFloat(longitude), 100); // Adjust radius as needed
+    results = store.searchGeoTags(searchterm);
   } else if (latitude && longitude) {
     results = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude), 100); // Adjust radius as needed
   } else {
