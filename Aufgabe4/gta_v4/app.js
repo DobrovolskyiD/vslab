@@ -33,8 +33,8 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 
 // Set content processing
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json());                                // for parsing application/json
+app.use(express.urlencoded({ extended: false }));       // for parsing application/x-www-form-urlencoded
 
 /**
  * VS1LAB:

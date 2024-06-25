@@ -59,7 +59,7 @@ function updateLocation() {
             console.log("GeoTags: ", geoTags);
 
             mapManager.updateMarkers(latitude, longitude, geoTags);
-            
+           
         });
     } else {
         // Log the existing coordinates
@@ -76,8 +76,7 @@ function updateLocation() {
         mapManager.updateMarkers(latitudes, longitudes, geoTags);
     }
 }
-
-
+//===========================================================================================================>
 
 // Function to handle the AJAX request for tagging
 async function submitTaggingForm(event) {
@@ -113,13 +112,19 @@ async function submitDiscoveryForm(event) {
     const latitude = document.getElementById('discoveryLatitude').value;
     const longitude = document.getElementById('discoveryLongitude').value;
     const searchterm = document.getElementById('searchterm').value;
+    
 
-    const response = await fetch(`/api/geotags?searchterm=${encodeURIComponent(searchterm)}&latitude=${latitude}&longitude=${longitude}`, {
+    url = `/api/geotags?latitude=${latitude}&longitude=${longitude}`
+    if (searchterm) {
+        url += `&searchterm=${encodeURIComponent(searchterm)}`;
+    }
+    const response = await fetch(url, { 
         method: 'GET'
-    });
+    });    
 
     if (response.ok) {
         const results = await response.json();
+        //updateDisplay();
         updateResults(results);                         
     } else {
         console.error('Fehler beim Suchen von GeoTags');
@@ -156,12 +161,20 @@ function updateResults(results) {
     mapManager.updateMarkers(latitude, longitude, results);
 }
 
+//===========================================================================================================>
+
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", () => { 
     updateLocation();
 
     // Register event listeners for the forms
-    document.getElementById('tag-form').addEventListener('button1', submitTaggingForm);
-    document.getElementById('discoveryFilterForm').addEventListener('button2', submitDiscoveryForm);    
+    document.getElementById('tag-form').addEventListener('Button1', submitTaggingForm);
+    document.getElementById('discoveryFilterForm').addEventListener('Button2', submitDiscoveryForm);    
 });
+
+
+//===========================================================================================================>
+
+
+
 
