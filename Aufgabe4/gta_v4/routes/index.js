@@ -16,7 +16,10 @@ router.get('/', (req, res) => {
   if (searchterm) {
     results = store.searchGeoTags(searchterm);
   } else if (latitude && longitude) {
+
     results = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude), 100); // Adjust radius as needed 
+    results = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude), 100); // Adjust radius as neededfg
+
   }
 
   const totalItems = results.length;
