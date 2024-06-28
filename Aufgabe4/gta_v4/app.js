@@ -10,11 +10,12 @@
  * Define module dependencies.
  */
 
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
-
+const session = require('express-session');
 const indexRouter = require('./routes/index');
 
 /**
@@ -61,5 +62,12 @@ app.use(function(err, req, res) {
     res.status(err.status || 500);
     res.render('error');
   });
+  app.use(session({
+  secret: 'secret-key', 
+  resave: false,
+  saveUninitialized: true
+}));
 
  module.exports = app;
+
+ // Route handler for /discovery endpoint
