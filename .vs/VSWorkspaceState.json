@@ -3,7 +3,14 @@
     "",
     "\\Aufgabe1",
     "\\Aufgabe1\\gta_v1",
-    "\\Aufgabe1\\gta_v1\\public"
+    "\\Aufgabe1\\gta_v1\\public",
+    "\\Aufgabe1\\gta_v1\\public\\images",
+    "\\Aufgabe3",
+    "\\Aufgabe3\\gta_v3",
+    "\\Aufgabe3\\gta_v3\\public",
+    "\\Aufgabe3\\gta_v3\\public\\images",
+    "\\Aufgabe3\\gta_v3\\public\\javascripts",
+    "\\Aufgabe3\\gta_v3\\public\\stylesheets"
   ],
   "SelectedNode": "\\Aufgabe1\\gta_v1\\public\\index.html",
   "PreviewInSolutionExplorer": false
