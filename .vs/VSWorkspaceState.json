@@ -1,17 +1,17 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Aufgabe1",
-    "\\Aufgabe1\\gta_v1",
-    "\\Aufgabe1\\gta_v1\\public",
-    "\\Aufgabe1\\gta_v1\\public\\images",
+    "\\Aufgabe2",
+    "\\Aufgabe2\\gta_v2",
+    "\\Aufgabe2\\gta_v2\\public",
+    "\\Aufgabe2\\gta_v2\\public\\stylesheets",
     "\\Aufgabe3",
     "\\Aufgabe3\\gta_v3",
-    "\\Aufgabe3\\gta_v3\\public",
-    "\\Aufgabe3\\gta_v3\\public\\images",
-    "\\Aufgabe3\\gta_v3\\public\\javascripts",
-    "\\Aufgabe3\\gta_v3\\public\\stylesheets"
+    "\\Aufgabe3\\gta_v3\\views",
+    "\\Aufgabe4",
+    "\\Aufgabe4\\gta_v4",
+    "\\Aufgabe4\\gta_v4\\public"
   ],
-  "SelectedNode": "\\Aufgabe1\\gta_v1\\public\\index.html",
+  "SelectedNode": "\\Aufgabe3\\gta_v3\\views\\index.ejs",
   "PreviewInSolutionExplorer": false
 }

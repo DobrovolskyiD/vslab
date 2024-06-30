@@ -67,8 +67,8 @@
         <a href="/discovery?page=<%= currentPage - 1 %>"> < </a>
     <% } %>
 
-    <% for (let i = 1; i <= totalPages; i++) { %>
-        <a href="/discovery?page=<%= i %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+    <% if (totalItems) { %>
+        <a href="/discovery?page=<%= currentPage %>" class="<%= currentPage === currentPage ? 'active' : '' %>"><%= currentPage + "/" + totalPages + " (" + totalItems +")" %></a>
     <% } %>
 
     <% if (currentPage < totalPages) { %>

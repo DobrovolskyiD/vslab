@@ -42,7 +42,8 @@ router.get('/', (req, res) => {
     longitude: longitude || null,
     searchterm: searchterm || '',
     currentPage: currentPage,
-    totalPages: totalPages
+    totalPages: totalPages,
+    totalItems: totalItems
   });
 });
 
@@ -64,7 +65,8 @@ router.post('/tagging', (req, res) => {
     latitude: latitude,
     longitude: longitude,
     currentPage: currentPage,
-    totalPages: totalPages
+    totalPages: totalPages,
+    totalItems: totalItems
   });
 });
 
@@ -96,7 +98,8 @@ router.post('/discovery', (req, res) => {
     latitude: latitude,
     longitude: longitude,
     currentPage: currentPage,
-    totalPages: totalPages
+    totalPages: totalPages,
+    totalItems: totalItems
   });
 });
 
@@ -122,7 +125,8 @@ router.get('/discovery', (req, res) => {
     latitude: latitude || null,
     longitude: longtitude || null,
     currentPage: currentPage,
-    totalPages: totalPages
+    totalPages: totalPages,
+    totalItems: totalItems
   });
 });
 
