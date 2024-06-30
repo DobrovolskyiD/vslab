@@ -1,0 +1,48 @@
+### Create a new GeoTag without hashtag
+POST http://localhost:3000/api/geotags
+Content-Type: application/json
+
+{
+    "name": "eiffel Tower",
+    "latitude": 48.8584,
+    "longitude": 2.2945
+}
+
+
+### Create a new GeoTag with hashtag
+POST http://localhost:3000/api/geotags
+Content-Type: application/json
+
+{
+    "name": "Tower",
+    "latitude": 48.8584,
+    "longitude": 2.2945,
+    "hashtag": "Eiffel"
+}
+
+
+### Retrieve all GeoTags
+GET http://localhost:3000/api/geotags
+
+
+### Retrieve a specific GeoTag
+GET http://localhost:3000/api/geotags/1
+
+
+### Update a GeoTag
+PUT http://localhost:3000/api/geotags/1
+Content-Type: application/json
+
+{
+    "name": "Updated Eiffel Tower",
+    "latitude": 48.8584,
+    "longitude": 2.2945
+}
+
+
+### Search GeoTags
+GET http://localhost:3000/api/geotags?searchTerm=Eiffel
+
+
+### Delete a GeoTag
+DELETE http://localhost:3000/api/geotags/1

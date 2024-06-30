@@ -110,7 +110,12 @@ class InMemoryGeoTagStore{
    * @param {string} name - The name of the GeoTag to remove.
    */
   removeGeoTag(name) {
-    this.#geoTags = this.#geoTags.filter(tag => tag.name !== name);
+    const index = this.#geoTags.findIndex(tag => tag.name === name);
+    if (index !== -1) {
+      const deleted = this.#geoTags.splice(index, 1);
+      return deleted[0];
+    }
+    return null;
   }
   
   

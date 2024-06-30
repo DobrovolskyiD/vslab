@@ -8,6 +8,7 @@ store.populateWithExamples();
 
 
 const ITEMS_PER_PAGE = 5;
+let searchTermsStore = [];
 
 router.get('/', (req, res) => {
   const { latitude, longitude, searchterm, page } = req.query;
@@ -72,13 +73,14 @@ router.post('/tagging', (req, res) => {
 
 router.post('/discovery', (req, res) => {
   const { latitude, longitude, searchterm } = req.body;
- 
+  
   let results;
-  if (searchterm) {
+  if (searchterm!=="") {
     results = store.searchNearbyGeoTags(searchterm, latitude, longitude, 100);
+    searchTermsStore.push(searchterm);
     
   } else {
-    results = store.getNearbyGeoTags(latitude, longitude, 100);
+    results = store.searchNearbyGeoTags(searchTermsStore[searchTermsStore.length -1], latitude, longitude, 100);
     
   }
 
@@ -131,10 +133,10 @@ router.get('/discovery', (req, res) => {
 });
 
 router.get('/api/geotags', (req, res) => {
-  const { latitude, longitude, searchterm } = req.query;
+  const { latitude, longitude, searchTerm } = req.query;
   let results;
-  if (searchterm) {
-    results = store.searchGeoTags(searchterm);
+  if (searchTerm) {
+    results = store.searchGeoTags(searchTerm);
   } else if (latitude && longitude) {
     results = store.getNearbyGeoTags(parseFloat(latitude), parseFloat(longitude), 100); // Adjust radius as needed
   } else {
@@ -174,7 +176,7 @@ router.put('/api/geotags/:id', (req, res) => {
 
 router.delete('/api/geotags/:id', (req, res) => {
   const id = req.params.id;
-  const result = store.removeGeoTag(id);
+  const result = store.removeid(id);
   if (result) {
     res.json(result);
   } else {
