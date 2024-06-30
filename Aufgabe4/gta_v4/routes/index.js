@@ -8,13 +8,17 @@ store.populateWithExamples();
 
 
 const ITEMS_PER_PAGE = 5;
-let searchTermsStore = [];
+let searchTermsStore = [""];
+
+
 
 router.get('/', (req, res) => {
-  const { latitude, longitude, searchterm, page } = req.query;
-  let results = store.getGeoTags();
+  const { latitude, longitude, page } = req.query;
 
-  if (searchterm) {
+  let searchterm = req.query.searchterm;
+  let results = store.getGeoTags();
+  if (searchterm==undefined) {
+    searchterm = "";
     results = store.searchGeoTags(searchterm);
   } else if (latitude && longitude) {
 
@@ -69,18 +73,23 @@ router.post('/tagging', (req, res) => {
     totalPages: totalPages,
     totalItems: totalItems
   });
+
+  res.redirect('/discovery');
 });
 
 router.post('/discovery', (req, res) => {
-  const { latitude, longitude, searchterm } = req.body;
+  let { latitude, longitude, searchterm } = req.body;
   
   let results;
-  if (searchterm!=="") {
+  if (searchterm!==undefined) {
     results = store.searchNearbyGeoTags(searchterm, latitude, longitude, 100);
+    searchTermsStore.push(longitude);
+    searchTermsStore.push(latitude);
     searchTermsStore.push(searchterm);
     
   } else {
-    results = store.searchNearbyGeoTags(searchTermsStore[searchTermsStore.length -1], latitude, longitude, 100);
+    searchterm = undefined;
+    results = store.getGeoTags();
     
   }
 
@@ -106,9 +115,18 @@ router.post('/discovery', (req, res) => {
 });
 
 router.get('/discovery', (req, res) => {
-  const { latitude, longtitude ,searchterm} = req.query;
-  let results = store.getGeoTags();
+  let { latitude, longitude ,searchterm} = req.query;
+  let results;
   
+  console.log(searchterm);
+  if (searchterm!=="") {
+  searchterm = searchTermsStore[searchTermsStore.length - 1];
+  results = store.searchNearbyGeoTags(searchTermsStore[searchTermsStore.length -1], searchTermsStore[searchTermsStore.length -2], searchTermsStore[searchTermsStore.length -3], 100);
+}
+
+  else{
+  results = store.getGeoTags();
+  }
   const totalItems = results.length;
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
   let currentPage = parseInt(req.query.page) || 1;
@@ -125,7 +143,7 @@ router.get('/discovery', (req, res) => {
   res.render('index', {
     taglist: paginatedResults,
     latitude: latitude || null,
-    longitude: longtitude || null,
+    longitude: longitude || null,
     currentPage: currentPage,
     totalPages: totalPages,
     totalItems: totalItems

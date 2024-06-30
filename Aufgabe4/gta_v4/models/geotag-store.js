@@ -143,8 +143,8 @@ class InMemoryGeoTagStore{
   * @returns {GeoTag[]} - Array of GeoTags in the proximity matching the keyword.
   */
   // Methode zum Suchen von GeoTags in der Nähe eines gegebenen Punktes nach einem Suchbegriff
-  searchNearbyGeoTags(keyword, latitude, longitude, radius) {
-    const caseKeyword = keyword.toLowerCase();
+  searchNearbyGeoTags(searchTerm, latitude, longitude, radius) {
+    const caseKeyword = searchTerm.toLowerCase();
     return this.#geoTags.filter(tag => {
       const distance = this.#calculateDistance(latitude, longitude, tag.latitude, tag.longitude);
       const casename = tag.name.toLowerCase();

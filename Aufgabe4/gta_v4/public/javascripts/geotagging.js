@@ -170,6 +170,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Register event listeners for the forms
     document.getElementById('tag-form').addEventListener('Button1', submitTaggingForm);
     document.getElementById('discoveryFilterForm').addEventListener('Button2', submitDiscoveryForm);    
+    document.getElementById('discoveryFilterForm').addEventListener('submit', function() {
+        const searchTerm = document.getElementById('term').value;
+        setCookie('searchterm', searchTerm, 1); // Set cookie for 1 day
+      });
+      
 });
 
 
