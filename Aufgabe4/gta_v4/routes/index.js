@@ -1,3 +1,4 @@
+
 // File origin: VS1LAB A3, A4
 
 /**
@@ -26,6 +27,7 @@ const GeoTag = require('../models/geotag');
  */
 // eslint-disable-next-line no-unused-vars
 const InMemoryGeoTagStore = require('../models/geotag-store');
+const { path } = require('../app');
 
 // App routes (A3)
 
@@ -48,7 +50,15 @@ store.populateWithExamples(); // Call this method to load example GeoTags into t
 
 // TODO: extend the following route example if necessary
 router.get('/', (req, res) => {
-  res.render('index', { taglist: [], latitude: null  , longitude : null  })
+
+  res.render('index', { taglist: [],
+                      latitude: null  ,
+                      longitude : null,
+                      currentPage : 0,
+                      totalPages : 0,
+                      totalTags : 0 ,
+                      searchterm:  ""
+                    })
 });
 
 
@@ -72,7 +82,22 @@ router.post('/tagging', (req, res) => {
   const newGeoTag = new GeoTag(name, latitude, longitude, hashtag); 
   store.addGeoTag(newGeoTag);
   const nearbyTags = store.getNearbyGeoTags(newGeoTag.latitude, newGeoTag.longitude, 100); // Adjust radius as needed
-  res.render('index', { taglist: nearbyTags,latitude: latitude , longitude : longitude });
+  
+  
+  const page = parseInt(req.query.page) || 1; // Current page number, default to 1 if not provided
+  const perPage = 5; // Number of tags per page
+  const totalPages = Math.ceil(nearbyTags.length / perPage);
+  const paginatedTags = nearbyTags.slice((page - 1) * perPage, page * perPage);
+  
+  res.render('index', { 
+    taglist: paginatedTags,
+    latitude: latitude  ,
+    longitude : longitude,
+    currentPage : page,
+    totalPages : totalPages,
+    totalTags : nearbyTags.length, 
+    searchterm: "" 
+  });
 });
 
 
@@ -92,6 +117,7 @@ router.post('/tagging', (req, res) => {
  * by radius and keyword.
  */
 
+let searchTermsStore = [];
 router.post('/discovery', (req, res) => {
   const { latitude, longitude, searchterm } = req.body;
   let results;
@@ -100,7 +126,23 @@ router.post('/discovery', (req, res) => {
   } else {
     results = store.getNearbyGeoTags(latitude, longitude, 100); // Adjust radius as needed
   }
-  res.render('index', { taglist: results,latitude: latitude , longitude : longitude  });
+  
+  
+  
+  const page = parseInt(req.query.page) || 1; // Current page number, default to 1 if not provided
+  const perPage = 5; // Number of tags per page
+  const totalPages = Math.ceil(results.length / perPage);
+  const paginatedTags = results.slice((page - 1) * perPage, page * perPage);
+  
+  res.render('index', { 
+    taglist: paginatedTags,
+    latitude: latitude  ,
+    longitude : longitude,
+    currentPage : page,
+    totalPages : totalPages,
+    totalTags : results.length,
+    searchterm: searchterm 
+    });
 });
 
 
@@ -123,7 +165,7 @@ router.post('/discovery', (req, res) => {
 // TODO: ... your code here ...
 router.get('/api/geotags', (req, res) => {
   const { latitude, longitude, searchterm } = req.query;
-  let results;
+  let results = [];
   if (searchterm) {
     results = store.searchGeoTags(searchterm);
   } else if (latitude && longitude) {
@@ -131,7 +173,19 @@ router.get('/api/geotags', (req, res) => {
   } else {
     results = store.getGeoTags();
   }
-  res.json(results);
+
+  const page = parseInt(req.query.page) || 1; // Current page number, default to 1 if not provided
+  const perPage = 5; // Number of tags per page
+  const totalPages = Math.ceil(results.length / perPage);
+  const paginatedTags = results.slice((page - 1) * perPage, page * perPage);
+  
+  res.json({ 
+    taglist: paginatedTags,
+    currentPage : page,
+    totalPages : totalPages,
+    totalTags : results.length });
+
+
 });
 
 /**
@@ -170,7 +224,7 @@ router.get('/api/geotags/:id', (req, res) => {
   if (tag) {
     res.json(tag);
   } else {
-    res.status(404).send('GeoTag not found');
+    res.status(404).send('GeoTag not found get');
   }
 });
 
@@ -197,7 +251,7 @@ router.put('/api/geotags/:id', (req, res) => {
   if (result) {
     res.json(result);
   } else {
-    res.status(404).send('GeoTag not found');
+    res.status(404).send('GeoTag not found put');
   }
 });
 
@@ -219,7 +273,7 @@ router.delete('/api/geotags/:id', (req, res) => {
   if (result) {
     res.json(result);
   } else {
-    res.status(404).send('GeoTag not found');
+    res.status(404).send('GeoTag not found del');
   }
 });
 

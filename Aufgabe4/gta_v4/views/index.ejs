@@ -68,7 +68,7 @@
                 <fieldset>
                     <legend>Search</legend>
                     <label for="term">Search term on keywords:</label>
-                    <input type="search" id="term"  name="searchterm" placeholder="e.g. Berlin"  >
+                    <input type="search" id="term"  name="searchterm" value="<%= searchterm   %>" placeholder="e.g Berlin " >
                     <input type="submit" id="button2" name="absendebutton2" value="Search">
                     <input type="hidden" name="latitude" id="discoveryLatitude" value="<%= latitude %>">
                     <input type="hidden" name="longitude" id="discoveryLongitude" value="<%= longitude %>">
@@ -87,6 +87,20 @@
                             <li><%= gtag.name %> ( <%= gtag.latitude %>,<%= gtag.longitude %>) <%= gtag.hashtag %> </li>
                         <% }); %>  
                     </ul>
+
+                    <!--  Aufgabe der pagination zu machen   -->
+                    <div class="pagination" id="pagination">
+                        <button id="pagereturn" ><</button>
+                        <span id="currentPage"><%= currentPage %></span>
+                        <span> / </span>
+                        <span id="totalPages"><%= totalPages %></span>
+                        <span id="totalTags">( <%= totalTags %> )</span>
+                        <button id="pagenext">></button>
+                    </div>
+
+
+
+
                 </div>
                 <div class="discovery__map col-8" id="map" data-tags="<%= JSON.stringify(taglist) %>">
                     <img src="./images/mapview.jpg" alt="a map with locations" id="mapView" />

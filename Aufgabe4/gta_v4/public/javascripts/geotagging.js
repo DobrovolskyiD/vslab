@@ -58,8 +58,8 @@ function updateLocation() {
             geoTags = JSON.parse(document.getElementById('map').getAttribute('data-tags'));
             console.log("GeoTags: ", geoTags);
 
-            mapManager.updateMarkers(latitude, longitude, geoTags);
-           
+            mapManager.updateMarkers(latitude, longitude,geoTags);
+            
         });
     } else {
         // Log the existing coordinates
@@ -69,14 +69,13 @@ function updateLocation() {
         mapManager = new MapManager();
         mapManager.initMap(latitudes, longitudes);
 
-        // Get the GeoTag objects from the data attribute
+         //Get the GeoTag objects from the data attribute
         geoTags = JSON.parse(document.getElementById('map').getAttribute('data-tags'));
         console.log("GeoTags: ", geoTags);
 
-        mapManager.updateMarkers(latitudes, longitudes, geoTags);
+        mapManager.updateMarkers(latitudes, longitudes,geoTags);
     }
 }
-//===========================================================================================================>
 
 // Function to handle the AJAX request for tagging
 async function submitTaggingForm(event) {
@@ -88,8 +87,8 @@ async function submitTaggingForm(event) {
     const hashtag = document.getElementById('hashtag').value;
 
     const newGeoTag  = { name, latitude, longitude, hashtag };
-    
-    const response = await fetch('/api/geotags', {
+
+    const response = await fetch(`/api/geotags`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -111,70 +110,129 @@ async function submitDiscoveryForm(event) {
 
     const latitude = document.getElementById('discoveryLatitude').value;
     const longitude = document.getElementById('discoveryLongitude').value;
-    const searchterm = document.getElementById('searchterm').value;
-    
+    const searchterm = document.getElementById('term').value;
 
-    url = `/api/geotags?latitude=${latitude}&longitude=${longitude}`
-    if (searchterm) {
-        url += `&searchterm=${encodeURIComponent(searchterm)}`;
-    }
+
+    url = `/api/geotags?latitude=${latitude}&longitude=${longitude}&searchterm=${encodeURIComponent(searchterm)}`
+
     const response = await fetch(url, { 
         method: 'GET'
-    });    
+    });
 
     if (response.ok) {
         const results = await response.json();
-        //updateDisplay();
-        updateResults(results);                         
+        updateResults(results.taglist);  // Update the results with the search term
+       // updateDisplay(1);  // Initialize the display from the first page                    
     } else {
         console.error('Fehler beim Suchen von GeoTags');
     }
 }
 
 // Function to update the display
-function updateDisplay() {
-    fetch('/api/geotags')
+function updateDisplay(page,searchterm) {
+    const currentPageElement = document.getElementById('currentPage');
+    const totalPagesElement = document.getElementById('totalPages');
+
+    
+    const url = `/api/geotags?searchterm=${encodeURIComponent(searchterm)}&page=${page}`;
+
+    fetch(url)
         .then(response => response.json())
-        .then(results => updateResults(results))
+        .then(results => {
+            console.log("Results from server:", results);
+            updateResults(results.taglist);
+            currentPageElement.textContent = results.currentPage;
+            totalPagesElement.textContent = results.totalPages;
+
+            // Update the URL to reflect the current page
+            const newUrl = new URL(window.location);
+        
+            if (searchterm !== "" ) {
+                newUrl.searchParams.set('searchterm', searchterm);
+            } else {
+                newUrl.searchParams.delete('searchterm');
+            }
+            newUrl.searchParams.set('page', results.currentPage);
+            window.history.pushState({ path: newUrl.href }, '', newUrl.href);
+        })
         .catch(error => console.error('Fehler beim Abrufen der GeoTags:', error));
+
 }
 
+
 // Function to update the results and map
-function updateResults(results) {
+function updateResults(results) { 
     const resultsDiv = document.getElementById('discoveryResults');
     
-
     // Clear previous results
     resultsDiv.innerHTML = '';
+    console.log('Results:', results);
+    console.log('Type of results:', typeof results);
+
     results.forEach(tag => {
         const tagElement = document.createElement('li');
         tagElement.textContent = `${tag.name} (${tag.latitude}, ${tag.longitude}) ${tag.hashtag}`;
         resultsDiv.appendChild(tagElement);
     });
 
+    
     // Update the map
-    // Assuming MapManager is already set up to update the map
     const latitude = parseFloat(document.getElementById('lat').value);
     const longitude = parseFloat(document.getElementById('long').value);
-    const mapManager = new MapManager();
-    mapManager.initMap(latitude, longitude);
-    mapManager.updateMarkers(latitude, longitude, results);
+
+    // Reuse the existing mapManager instance or create a new one if not exist
+    if (!window.mapManager) {
+        window.mapManager = new MapManager();
+        window.mapManager.initMap(latitude, longitude);
+    }
+    window.mapManager.updateMarkers(latitude, longitude, results);
+    
 }
 
-//===========================================================================================================>
+
 
 // Wait for the page to fully load its DOM content, then call updateLocation
 document.addEventListener("DOMContentLoaded", () => { 
     updateLocation();
 
     // Register event listeners for the forms
-    document.getElementById('tag-form').addEventListener('Button1', submitTaggingForm);
-    document.getElementById('discoveryFilterForm').addEventListener('Button2', submitDiscoveryForm);    
+    document.getElementById('tag-form').addEventListener('button1', submitTaggingForm);
+    document.getElementById('discoveryFilterForm').addEventListener('button2', submitDiscoveryForm);
+    
+    const currentPageElement = document.getElementById('currentPage');
+    const totalPagesElement = document.getElementById('totalPages');
+    const pageReturnButton = document.getElementById('pagereturn');
+    const pageNextButton = document.getElementById('pagenext');
+
+    // Check if there is a page parameter in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialPage = parseInt(urlParams.get('page')) || 1;
+    const initialSearchTerm = urlParams.get('searchterm') || '';
+
+    const searchterm = document.getElementById('term').value;
+    console.log("Current searchterm value:", searchterm);
+
+
+
+    let currentPage = initialPage;
+    currentPageElement.textContent = currentPage;
+    document.getElementById('term').value = initialSearchTerm; // Set search term field
+
+
+    const totalPages = parseInt(totalPagesElement.textContent);
+
+
+    pageReturnButton.addEventListener('click', function () {
+        if (currentPage > 1) {
+            currentPage--;
+            updateDisplay(currentPage,searchterm);
+        }
+    });
+
+    pageNextButton.addEventListener('click', function () {
+        if (currentPage < totalPages) {
+            currentPage++;
+            updateDisplay(currentPage,searchterm);
+        }
+    });
 });
-
-
-//===========================================================================================================>
-
-
-
-

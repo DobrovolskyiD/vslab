@@ -213,7 +213,7 @@ input[type="submit"]:hover {
 }
 
 .discovery__results li {
-  width: 300px;
+  width: 250px;
   padding: 1rem .75rem;
   background-color: var(--background-color);
   color: var(--link-color);
@@ -222,6 +222,29 @@ input[type="submit"]:hover {
 }
 .discovery__results li:not(:first-child) {
   margin-top: 1rem;
+}
+
+/* Das ist das von der Bonus aufgabe  */
+
+.pagination {
+  display: flex;
+  margin-top: 20px;
+}
+
+.pagination button{
+  margin-left: 85px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.pagination button:not(:first-child){
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-left: 5px;
+}
+
+#totalPages {
+  margin-right: 5px;
 }
 /* ### TODO ### Styles for Footer Component */
 

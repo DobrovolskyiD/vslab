@@ -89,10 +89,9 @@ class InMemoryGeoTagStore{
    * @returns {Object[]} A list of GeoTags that match the filter.
    */
   searchGeoTags(searchTerm) {
-    const lowerCaseSearchTerm = searchTerm.toLowerCase();
     return this.#geoTags.filter(tag => 
-      tag.name.toLowerCase().includes(lowerCaseSearchTerm) || 
-      (tag.hashtag && tag.hashtag.toLowerCase().includes(lowerCaseSearchTerm))
+      tag.name.toLowerCase().includes(searchTerm.toLowerCase()) ||  
+      tag.hashtag.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }
   
