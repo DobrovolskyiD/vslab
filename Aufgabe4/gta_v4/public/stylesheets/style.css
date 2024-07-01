@@ -224,28 +224,6 @@ input[type="submit"]:hover {
   margin-top: 1rem;
 }
 
-/* Das ist das von der Bonus aufgabe  */
-
-.pagination {
-  display: flex;
-  margin-top: 20px;
-}
-
-.pagination button{
-  margin-left: 85px;
-  margin-right: 5px;
-  cursor: pointer;
-}
-
-.pagination button:not(:first-child){
-  margin-left: 0px;
-  margin-right: 0px;
-  margin-left: 5px;
-}
-
-#totalPages {
-  margin-right: 5px;
-}
 /* ### TODO ### Styles for Footer Component */
 
 .footer {
